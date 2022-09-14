@@ -1,17 +1,17 @@
 import * as Yup from 'yup';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-// form
 import { useForm } from 'react-hook-form';
+
 import { yupResolver } from '@hookform/resolvers/yup';
-// @mui
 import { Stack, IconButton, InputAdornment } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
-// components
+
+import {apiRegister} from "../../../apiClient";
+
 import Iconify from '../../../components/Iconify';
 import { FormProvider, RHFTextField } from '../../../components/hook-form';
 
-// ----------------------------------------------------------------------
 
 export default function RegisterForm() {
   const navigate = useNavigate();
@@ -46,6 +46,12 @@ export default function RegisterForm() {
     navigate('/dashboard', { replace: true });
   };
 
+  const onRegister=async()=>{
+    const test = await apiRegister()
+
+    console.log("register is ...",test)
+  }
+
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
       <Stack spacing={3}>
@@ -71,7 +77,7 @@ export default function RegisterForm() {
           }}
         />
 
-        <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isSubmitting}>
+        <LoadingButton onClick={onRegister} fullWidth size="large" type="submit" variant="contained" loading={isSubmitting}>
           Register
         </LoadingButton>
       </Stack>
